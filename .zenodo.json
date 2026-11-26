@@ -1,0 +1,30 @@
+{
+  "title": "Almost-sure parity resolvers can depend on transition probabilities",
+  "upload_type": "software",
+  "version": "1.0.0",
+  "publication_date": "2026-11-27",
+  "creators": [
+    {
+      "name": "DannyExperiments"
+    }
+  ],
+  "description": "A four-state parity automaton has two memoryless full-support resolvers. The first accepts every fixed input almost surely. The uniform resolver almost surely rejects a specific fixed input. Their distributions differ at one state and letter.\n\nEach separator independently resets the automaton to one of two states. The chance of an odd or positive even output at the next separator depends on the preceding block length. Equal hazards give almost-sure acceptance for every fixed input by the Borel–Cantelli lemmas. Under uniform resolution, a growing-block input makes the odd hazards diverge and the positive even hazards summable.\n\nHenzinger, Prakash and Thejaswini posed the fixed-word support question at MFCS 2025. Its qualitative negative answer follows from older constructions by Baier, Bertrand and Größer, as shown in the manuscript. This release gives an explicit four-state witness and direct proof. Exact replay checks 50 rational block laws, reset independence and the geometric series. The interactive illustrates expected counts in groups of blocks. No minimality or priority claim is made. External peer review is pending.\n\nUnder human direction, ChatGPT Astra 6.2 (OpenAI) generated the discovery proof and original replay packet. OpenAI Codex reviewed the mathematics and revised the manuscript. GPT-6.2 Sol checked the primary literature, established the transfer from earlier results, and prepared the replay, worked visual and release files. DannyExperiments maintains the repository and is the preferred citation identity. No AI system is proposed as an author.",
+  "keywords": [
+    "parity automata",
+    "probabilistic automata",
+    "almost-sure acceptance",
+    "nondeterminism resolution",
+    "Borel–Cantelli lemma",
+    "transition support"
+  ],
+  "access_right": "open",
+  "license": "other-closed",
+  "notes": "All rights reserved. Publicly downloadable files are supplied without a repository-wide reuse license.",
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/DannyExperiments/same-support-parity-resolvers/releases/tag/v1.0.0",
+      "relation": "isSupplementTo",
+      "resource_type": "software"
+    }
+  ]
+}

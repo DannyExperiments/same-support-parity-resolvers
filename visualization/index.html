@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Parity block explorer</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#101c30;color:#f5f8fd;font:16px/1.5 system-ui}main{max-width:790px;margin:auto;padding:18px}h1{margin:0;font-size:clamp(1.55rem,5vw,2.2rem)}p{color:#d8e5fa;margin:7px 0 15px}.controls,.counts{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:12px}label,.control,.counts div{display:grid;align-content:center;gap:6px;padding:11px;background:#1b2e4b;border-radius:10px}.counts{margin-top:11px}.counts strong{font-size:1.45rem}input,select{min-width:0;width:100%;min-height:36px;accent-color:#78dcd1}select{background:#101c30;color:#f5f8fd;border:1px solid #7f93b0;border-radius:6px;font:inherit}canvas{display:block;margin:14px 0 0;width:100%;height:262px;background:#1b2e4b;border-radius:12px}.odd{color:#ffac97}.even{color:#78dcd1}
+</style>
+<main>
+<h1>Parity block explorer</h1>
+<p>Compare expected priority arrivals across 2ⁿ copies of aⁿ#.</p>
+<div class="controls">
+<label>Resolver<select id="resolver"><option value="G">Almost-sure G</option><option value="U">Uniform U</option></select></label>
+<div class="control"><div><label for="length" style="display:inline;padding:0">Block length</label> <output id="length-label" for="length">3</output></div><input id="length" type="range" min="1" max="12" value="3"></div>
+<label>Rotate view<input id="angle" type="range" min="0" max="360" value="30"></label>
+</div>
+<canvas id="scene" aria-label="3D bars displaying the two exact values below">The expected counts appear below.</canvas>
+<div class="counts" aria-live="polite">
+<div><span class="odd">Priority 1</span><strong id="odd">1/2</strong></div>
+<div><span class="even">Priority 2</span><strong id="even">1/2</strong></div>
+<div><span>Blocks in group</span><strong id="blocks">8</strong></div>
+</div>
+<p>Priority 1 contributes 1/2 to every group, so the sum diverges. For G, priority 2 does the same. For U, its priority 2 counts form a geometric series with sum one.</p>
+</main>
+<script>
+"use strict";
+const el=id=>document.getElementById(id);
+const canvas=el("scene"),ctx=canvas.getContext("2d");
+function counts(n,resolver){
+  return {odd:"1/2",even:resolver==="G"?"1/2":(2**(n-1))+"/"+(3**n),blocks:2**n,ratio:resolver==="G"?1:(2/3)**n};
+}
+const faces=[[0,1,3,2],[4,6,7,5],[0,4,5,1],[2,3,7,6],[0,2,6,4],[1,5,7,3]];
+function draw(){
+  const n=Number(el("length").value),data=counts(n,el("resolver").value);
+  el("length-label").value=n;
+  for(const key of ["odd","even","blocks"])el(key).textContent=data[key];
+  const width=canvas.clientWidth,height=canvas.clientHeight,pixel=window.devicePixelRatio||1;
+  canvas.width=width*pixel;canvas.height=height*pixel;ctx.scale(pixel,pixel);
+  const yaw=Number(el("angle").value)*Math.PI/180, tilt=.37;
+  function project(x,y,z){
+    const X=x*Math.cos(yaw)+z*Math.sin(yaw), Z=z*Math.cos(yaw)-x*Math.sin(yaw);
+    const Y=y*Math.cos(tilt)-Z*Math.sin(tilt),depth=y*Math.sin(tilt)+Z*Math.cos(tilt);
+    const s=Math.min(width*.88,420)/(4.2-depth);
+    return [width/2+s*X,height*.62-s*Y,depth];
+  }
+  const surface=[];
+  for(const [x,h,rgb] of [[-.62,1.35,[255,172,151]],[.62,1.35*data.ratio,[120,220,209]]]){
+    const corners=[];
+    for(const X of [x-.25,x+.25])for(const Y of [-.55,-.55+h])for(const Z of [-.3,.3])
+      corners.push(project(X,Y,Z));
+    faces.forEach((face,i)=>{
+      const points=face.map(v=>corners[v]);
+      surface.push({points,depth:points.reduce((s,p)=>s+p[2],0)/4,fill:"rgb("+rgb.map(c=>Math.round(c*[.68,.76,.52,1,.64,.86][i])).join(",")+")"});
+    });
+  }
+  surface.sort((a,b)=>a.depth-b.depth);
+  for(const item of surface){
+    ctx.beginPath();item.points.forEach(([x,y],i)=>i?ctx.lineTo(x,y):ctx.moveTo(x,y));
+    ctx.closePath();ctx.fillStyle=item.fill;ctx.fill();ctx.strokeStyle="#101c30";ctx.stroke();
+  }
+}
+for(const id of ["length","angle","resolver"])el(id).addEventListener("input",draw);
+window.addEventListener("resize",draw);
+draw();
+</script></html>
