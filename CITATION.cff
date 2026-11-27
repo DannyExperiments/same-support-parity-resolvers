@@ -4,9 +4,11 @@ title: "Almost-sure parity resolvers can depend on transition probabilities"
 authors:
   - name: "DannyExperiments"
 type: software
-version: "1.0.0"
-date-released: 2026-11-27
 repository-code: "https://github.com/DannyExperiments/same-support-parity-resolvers"
+version: "1.1.0"
+date-released: 2026-11-27
+doi: "10.5281/zenodo.24574027"
+url: "https://doi.org/10.5281/zenodo.24574027"
 keywords:
   - "parity automata"
   - "probabilistic automata"
@@ -14,15 +16,11 @@ keywords:
   - "nondeterminism resolution"
   - "Borel\u2013Cantelli lemma"
   - "transition support"
-doi: "10.5281/zenodo.24572568"
-url: "https://doi.org/10.5281/zenodo.24572568"
-preferred-citation:
-  type: software
-  title: "Almost-sure parity resolvers can depend on transition probabilities"
-  authors:
-    - name: "DannyExperiments"
-  version: "1.0.0"
-  date-released: 2026-11-27
-  doi: "10.5281/zenodo.24572568"
-  url: "https://doi.org/10.5281/zenodo.24572568"
-  repository-code: "https://github.com/DannyExperiments/same-support-parity-resolvers"
+references:
+  - type: software
+    title: "Almost-sure parity resolvers can depend on transition probabilities"
+    version: "1.0.0"
+    authors:
+      - name: "DannyExperiments"
+    doi: "10.5281/zenodo.24572568"
+    url: "https://github.com/DannyExperiments/same-support-parity-resolvers/releases/tag/v1.0.0"

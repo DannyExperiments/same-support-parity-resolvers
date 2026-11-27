@@ -1,6 +1,6 @@
 # Release manifest
 
-These files are covered by the repository SHA-256 ledger.
+Files covered by the repository SHA-256 ledger.
 
 - `.github/workflows/pdf.yml`
 - `.github/workflows/replay.yml`
@@ -21,18 +21,27 @@ These files are covered by the repository SHA-256 ledger.
 - `STATUS.md`
 - `audits/public_safe_reports/LITERATURE.md`
 - `audits/public_safe_reports/MATHEMATICS.md`
+- `audits/public_safe_reports/THREE_STATE_LITERATURE.md`
+- `audits/public_safe_reports/THREE_STATE_MATHEMATICS.md`
 - `paper/BUILD.md`
 - `paper/manuscript.pdf`
 - `paper/manuscript.tex`
 - `paper/references.bib`
 - `proof/recovered-construction.md`
+- `proof/three-state-supplement.md`
 - `proof/worked-block.md`
+- `proof/worked-three-state-block.md`
 - `release/HUMAN_RELEASE_CHECKLIST.md`
 - `scripts/verify_repository.py`
 - `verification/results/replay.txt`
 - `verification/src/replay.py`
 - `visualization/README.md`
+- `visualization/THREE_STATE_README.md`
 - `visualization/index.html`
 - `visualization/parity-blocks-explorer.zip`
 - `visualization/parity-blocks.gif`
 - `visualization/render.py`
+- `visualization/render_three_state.py`
+- `visualization/three-state-blocks-explorer.zip`
+- `visualization/three-state-blocks.gif`
+- `visualization/three-state.html`

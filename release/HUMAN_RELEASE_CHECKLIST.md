@@ -1,6 +1,6 @@
 # Release checklist
 
-- Confirm the fixed-word quantifier and full support for both resolvers.
-- Confirm the qualitative consequence is attributed.
-- Verify reviewed commit, workflows, downloads and checksums.
-- Verify version tag and DOI after authorized publication.
+- Confirm both complete constructions and the fixed-word full-support hypothesis.
+- Confirm the manuscript cites the original immutable four-state release and credits the earlier implication.
+- Verify the reviewed commit, workflows, downloads and checksums.
+- Verify the authorized version tag and reserved DOI after publication.

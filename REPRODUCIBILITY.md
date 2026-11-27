@@ -5,6 +5,6 @@ Run from the repository root with Python 3.11 or later.
     python3 -I scripts/verify_repository.py
     python3 -I verification/src/replay.py
 
-The standard-library replay propagates both row laws through 25 block lengths, checks the reset factorization and evaluates the geometric series with exact fractions. [Recorded replay](verification/results/replay.txt).
+The standard-library replay checks both witnesses through 604 block laws, all 2,916 joint priority pairs for the two-block tests, and 128 grouped-word partial sums on the separating word. [Recorded replay](verification/results/replay.txt).
 
-Extract the [offline explorer](visualization/parity-blocks-explorer.zip) and open index.html. The [GIF renderer](visualization/render.py) uses Python and Pillow with supplied font paths. [Build the paper](paper/BUILD.md).
+Open the [three-state explorer](visualization/three-state.html) in an offline browser or unzip its [self-contained ZIP](visualization/three-state-blocks-explorer.zip). [GIF rendering source](visualization/render_three_state.py) · [Original four-state explorer](visualization/index.html) · [PDF build](paper/BUILD.md).

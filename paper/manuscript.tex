@@ -14,18 +14,18 @@
 
 \begin{document}
 \begin{abstract}
-We give a four-state binary-alphabet parity automaton and two memoryless resolvers with full support. They differ on one row. One accepts every fixed input word almost surely, while the uniform resolver rejects a particular fixed word almost surely. We derive the qualitative negative answer independently from earlier probabilistic automata constructions and give a direct proof for the small example.
+We give a three-state binary-alphabet parity automaton and two memoryless resolvers with full support. They differ on one row. One accepts every fixed input word almost surely, while the uniform resolver rejects a particular fixed word almost surely. We retain the four-state witness from the original version and attribute the qualitative negative answer to an implication of earlier probabilistic automata constructions.
 \end{abstract}
 \maketitle
 
 \section{Question and model}
 Henzinger, Prakash and Thejaswini~\cite[\S6]{HPT} ask whether an almost-sure resolver in the stochastic setting is indifferent to the exact probabilities. For a fixed infinite input word, the resolver samples a run by choosing among the available transitions. Almost-sure resolution means acceptance with probability one for each word in the nondeterministic language. The full input word is fixed independently of the sampled run. A memoryless resolver assigns a probability distribution to each state and input letter. Its support comprises all transitions to which it assigns positive probability. We use transition priorities and accept when the largest priority seen infinitely often is even.
 
-\begin{theorem}
+\begin{theorem}\label{thm:four}
 There is a four-state parity automaton with a binary alphabet and universal nondeterministic language, with memoryless resolvers \(G\) and \(U\) that give positive probability to every transition. Resolver \(G\) accepts every fixed word almost surely. Resolver \(U\) is uniform and almost surely rejects a particular fixed word. The resolvers differ at only one state and input letter.
 \end{theorem}
 
-\section{Automaton and direct proof}
+\section{The original four-state witness}\label{sec:four}
 The states are \(S,R,D_1,D_2\), the starting state is \(D_1\), and the alphabet is \(\{a,\#\}\). Every \(a\)-edge has priority zero. The \(a\)-successors of \(S,R,D_1,D_2\) are respectively \((S,D_1,D_2)\), \((R,D_1)\), \((D_1)\), and \((D_2)\). Every \(\#\)-row has successors \((S,R)\). Both edges in that row have priority \(2,1,0,0\), respectively, for sources \(S,R,D_1,D_2\). Resolver \(G\) is uniform except on \((S,a)\), where the listed successors have probabilities \((1/2,1/4,1/4)\). Resolver \(U\) is uniform on all rows.
 
 A word with finitely many occurrences of \(\#\) eventually emits only priority zero. Otherwise ignore the prefix through the first \(\#\); write the rest as blocks \(a^n\#\) with \(n\geq 0\). The coin at the preceding \(\#\) selects \(S\) or \(R\) uniformly, independent of the source and previous choices. The priority emitted at that preceding \(\#\) depends only on its source. Thus the closing priority of each block depends only on its preceding reset coin and the independent samples on its \(a\)-steps. These sets of coins are disjoint across blocks. The block priorities are independent, even when the block lengths vary.
@@ -34,18 +34,48 @@ The priority \(1\) probability for \(a^n\#\) is \(2^{-n}/2\) under either resolv
 
 For \(U\), use a word starting with \(\#\), followed, for \(n=1,2,\ldots\), by \(2^n\) copies of \(a^n\#\). Across that word the sum of the priority \(1\) probabilities is \(\sum_{n\geq1}1/2=\infty\); the sum for priority \(2\) is \(\frac12\sum_{n\geq1}(2/3)^n=1\). The two lemmas imply infinitely many \(1\)'s and finitely many \(2\)'s almost surely. This proves the theorem.
 
+The four-state witness and its proof appeared in version~1.0.0~\cite{V1}.
+
+\section{A three-state witness}\label{sec:three}
+
+\begin{theorem}\label{thm:three}
+There is a three-state parity automaton with a binary alphabet and universal nondeterministic language, with full-support memoryless resolvers \(G\) and \(U\) differing on one state and letter. Resolver \(G\) accepts each fixed word almost surely, whereas the uniform resolver \(U\) almost surely rejects a particular fixed word.
+\end{theorem}
+
+The states are \(S,R,D\), the initial state is \(D\), and the alphabet is \(\{a,\#\}\). The \(a\)-successors of \(S,R,D\) are respectively \((S,R,D)\), \((R,D)\), and \((D)\), all at priority zero. Every \(\#\)-row has the two successors \((S,R)\), both at priority \(2,1,0\), respectively, for sources \(S,R,D\). There is one transition for each listed source, letter and destination. Both resolvers use the uniform distribution on every row except that \(G\) assigns \((2/3,1/6,1/6)\) to the listed successors of \((S,a)\). In particular all transitions have positive probability under both resolvers.
+
+A word with finitely many separators eventually emits only priority zero. For a word with infinitely many \(\#\)'s, parity is determined by the blocks \(a^n\#\) after the first separator, allowing \(n=0\). Each block begins at a fair independent reset to \(S\) or \(R\). The closing priority is read from the state reached after its \(a\)-steps, before the next reset coin matters. Each closing priority thus depends on a disjoint set of random draws, even for adjacent separators. The closing priorities are independent for each fixed word.
+
+Under \(G\), the row vector \((1/2,1/2)\) of live-state masses is a left eigenvector for the substochastic \(a\)-matrix on \(S,R\):
+\[
+  (1/2,1/2)
+  \begin{pmatrix}2/3&1/6\\0&1/2\end{pmatrix}
+  =\tfrac23(1/2,1/2).
+\]
+A length-\(n\) block therefore has probability \((2/3)^n/2\) for each of priorities 2 and 1. If the sum of these probabilities over all blocks is finite, both priorities occur only finitely often almost surely by the first Borel--Cantelli lemma. If it diverges, priority 2 occurs infinitely often almost surely by the second lemma. Both cases imply acceptance. In particular each fixed word admits an accepting supported run, so the nondeterministic language is universal.
+
+Under \(U\), let \(s_n,r_n\) be the corresponding \(S,R\) masses after \(n\) steps. They satisfy \(s_0=r_0=1/2\) and
+\[
+ s_{n+1}=s_n/3,\qquad r_{n+1}=s_n/3+r_n/2.
+\]
+It follows that \(s_n=3^{-n}/2\) and \(r_n=(3/2)2^{-n}-3^{-n}\ge 2^{-n}/2\). These are the respective probabilities of transition priorities 2 and 1 at the close of the block. In the fixed word that begins with \(\#\), then concatenates \(2^n\) copies of \(a^n\#\) for \(n=1,2,\ldots\), the priority 2 probabilities sum to \(\frac12\sum_{n\ge1}(2/3)^n=1\). The priority 1 probabilities sum to at least \(\sum_{n\ge1}1/2=\infty\). The two Borel--Cantelli lemmas give eventual absence of priority 2 and infinite recurrence of priority 1 almost surely. Thus \(U\) almost surely rejects this word.
+
+The edge from \(S\) to \(R\) replaces the extra delay state of Theorem~\ref{thm:four}. Under \(G\) the influx to \(R\) offsets its lower self-loop probability and balances the two live masses. The example reduces the state count of the explicit witness. Minimality is undetermined.
+
 \section{An implication of earlier probabilistic automata constructions}
 The qualitative answer already follows from constructions by Baier, Bertrand and Gr\"o{\ss}er~\cite{BBGpre,BBG}. Lemma~3.9 of~\cite{BBGpre} gives a common-support family of probabilistic B\"uchi automata whose languages \(L_t\) of positive acceptance satisfy \(L_\nu\subsetneq L_\lambda\) for \(0<\lambda<\nu<1\). Their Theorem~3.12 turns each of these automata into a complete probabilistic Rabin automaton \(A_t\) that accepts precisely \(L_t\) with probability one and every other word with probability zero. In the detailed construction~\cite[Theorem~4.3.2, pp.~78--79]{G}, each output transition probability sums products of input transition probabilities. The admissible tuples and the grouping of products depend only on supports, reachable sets and finite bookkeeping. Thus the output support, initial state and Rabin pairs are the same for all \(t\).
 
 Take the synchronous product of two copies. Both components read the same letter and sample their successors independently, so a product edge is positive exactly when its two coordinate edges are positive. Accept when the first component satisfies its Rabin condition or the second fails its Rabin condition. This is a Muller condition on product states: each component's set of infinitely recurring states is the corresponding projection of the infinitely recurring state pairs, since the product state set is finite. A deterministic latest-appearance-record monitor turns this into parity on a shared expanded support. In detail, maintain a permutation of all product states. On visiting one, move it from position \(k\) to the front and use priority \(2k\) or \(2k-1\) according as the old first \(k\) states form an accepting or rejecting Muller set. Eventually the actual recurring states occupy the first \(\ell\) positions, where \(\ell\) is their number. Position \(\ell\) is visited infinitely often and no larger position recurs. Its old prefix is the actual recurring set. The monitor therefore preserves the acceptance condition.
 
-Using \((A_\nu,A_\nu)\), each fixed word satisfies this disjunction almost surely: the first component accepts almost surely on \(L_\nu\) and the second fails its Rabin condition almost surely elsewhere. The nondeterministic support language is therefore universal. Using \((A_\nu,A_\lambda)\), any word in \(L_\lambda\setminus L_\nu\) almost surely fails the disjunction, with the support unchanged. The example in Section~2 supplies a direct four-state witness of this qualitative consequence and makes the strict reweighting a uniform one. Its size and priority are unclaimed.
+Using \((A_\nu,A_\nu)\), each fixed word satisfies this disjunction almost surely: the first component accepts almost surely on \(L_\nu\) and the second fails its Rabin condition almost surely elsewhere. The nondeterministic support language is therefore universal. Using \((A_\nu,A_\lambda)\), any word in \(L_\lambda\setminus L_\nu\) almost surely fails the disjunction, with the support unchanged. The explicit witnesses in Sections~\ref{sec:four} and~\ref{sec:three} show that uniform reweighting can fail after changing just one row. The qualitative result already follows from the previous constructions.
 
 \section{Scope}
-The word used here is fixed in advance. The adaptive-adversary result of~\cite[\S2]{HPT} starts from a resolver winning while the letter chooser can observe the run. The fixed-word hypotheses here are different. For any one ultimately periodic word, the period and finite resolver memory instead give a finite homogeneous Markov chain after a prefix. Almost surely a reachable bottom component is entered, and its maximum priority occurs infinitely often. With the same supports, the reachable bottom components and their priorities agree. The word separating the two resolvers above uses unbounded block lengths.
+The word used here is fixed in advance. The adaptive-adversary result of~\cite[\S2]{HPT} starts from a resolver winning while the letter chooser can observe the run. The fixed-word hypotheses here are different. For any one ultimately periodic word, the period and finite resolver memory instead give a finite homogeneous Markov chain after a prefix. Almost surely a reachable bottom component is entered, and its maximum priority occurs infinitely often. With the same supports, the reachable bottom components and their priorities agree. The word separating both pairs of resolvers above uses unbounded block lengths.
 
 \section*{Research disclosure}
 Under human direction, ChatGPT Astra 6.2 (OpenAI) generated the discovery proof and original replay packet. OpenAI Codex reviewed the mathematics and revised the manuscript. GPT-6.2 Sol checked the primary literature, established the transfer from earlier results, and prepared the replay, worked visual and release files. DannyExperiments maintains the repository and is the preferred citation identity. No AI system is proposed as an author.
+
+For the three-state supplement, ChatGPT Astra 6.2 (OpenAI) generated the construction under human direction. OpenAI Codex independently checked the mathematics and block replay. GPT-6.2 Sol checked the scope and literature and prepared the revised manuscript, replay and illustration.
 
 \begin{thebibliography}{9}
 \raggedright
@@ -53,5 +83,6 @@ Under human direction, ChatGPT Astra 6.2 (OpenAI) generated the discovery proof 
 \bibitem{BBGpre} C. Baier, N. Bertrand and M. Gr\"o{\ss}er, Probabilistic Automata over Infinite Words: Expressiveness, Efficiency, and Decidability, 2009. \href{https://arxiv.org/abs/0907.4760}{arXiv:0907.4760}.
 \bibitem{BBG} C. Baier, M. Gr\"o{\ss}er and N. Bertrand, Probabilistic \(\omega\)-Automata, J. ACM 59 (2012), article 1. \href{https://doi.org/10.1145/2108242.2108243}{doi:10.1145/2108242.2108243}.
 \bibitem{G} M. T. Gr\"o{\ss}er, Reduction Methods for Probabilistic Model Checking, dissertation, TU Dresden, 2008. \href{https://wwwtcs.inf.tu-dresden.de/ALGI/PUB/thesis_groesser.pdf}{Institutional PDF}.
+\bibitem{V1} DannyExperiments, Almost-sure parity resolvers can depend on transition probabilities, version 1.0.0, 2026. \href{https://doi.org/10.5281/zenodo.24572568}{doi:10.5281/zenodo.24572568}.
 \end{thebibliography}
 \end{document}

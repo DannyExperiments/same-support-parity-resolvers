@@ -1,1 +1,3 @@
-50 exact block laws, reset independence, and geometric-sum check passed.
+604 exact block laws and reset factorizations across both witnesses.
+324 two-block laws and 2916 priority-pair probabilities checked, including adjacent separators.
+128 grouped-word partial sums on the separating word checked.
